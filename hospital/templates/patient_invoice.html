@@ -1,0 +1,146 @@
+<title>Invoice and Payments</title>
+{% extends 'patient_base.html'%}
+
+{% block content %}
+
+    
+      <div class="container-fluid mt-2">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="card shadow mt-3 mb-4">
+                  <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-center text-primary">Invoice</h6>
+                  </div>
+                  <div class="card-body">
+                      
+                      <div class="table-responsive">
+                          <!-- <a href="/add_doctors" class="btn btn-primary mb-2">Add Doctor</a> -->
+                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                              <thead>
+                                  <tr> 
+                                      <th data-sortable="true">Date</th>
+                                      <th data-sortable="true"> Patient Name</th>
+                                      <th data-sortable="true"> Doctor Name </th>
+                                      <th data-sortable='true'>Consultation</th>
+                                      <th data-sortable="true"> Paid </th>
+                                      <th data-sortable="true">Pending</th>
+                                      <th data-sortable="true">Total</th>
+                                      <th data-sortable="true">Invoice</th>
+                                      
+                                  </tr>
+                              </thead>
+                          
+                              <tbody>
+                                  {% for appoint in get_all_appointments %}
+                                      <tr>
+                                          <td>
+                                              {{appoint.date}}
+                                          </td>
+                                          <td>
+                                              {{appoint.patient_name}}
+                                          </td>
+                                          <td>
+                                              {{appoint.doctor_name}}
+                                          </td>
+                                          <td>
+                                            {{appoint.status}}
+                                          </td>
+                                          <td>
+                                              {{appoint.paid}}
+                                          </td>
+                                          <td>
+                                              {{appoint.pending}}
+                                          </td>
+                                          <td>
+                                              {{appoint.total}}
+                                          </td>
+                                          {% if appoint.status == "Completed" %}
+                                          <td>
+                                              <button class="btn btn-secondary mb-2" data-toggle="modal" data-target="#myModal_{{appoint.id}}"> Open Invoice </button>
+                                          </td>
+                                          {%else%}
+                                          <td>
+                                            <button class="btn btn-secondary mb-2" data-toggle="modal" data-target="#myModal_{{appoint.id}}" disabled> Open Invoice </button>
+                                          </td>
+                                          {%endif %}
+                                          
+                                         
+                                      </tr>
+      
+                                  {% endfor %}
+                                 
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      {% for appoint in get_all_appointments %}
+      <div class="modal" id="myModal_{{appoint.id}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+    
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Invoice</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+  
+              <div class="row ml-2">
+                  Invoice ID : {{appoint.id}}
+              </div>
+              <div class="row ml-2">
+                  Patient Name : {{appoint.patient_name}}
+              </div>
+              <div class="row ml-2">
+                  Doctor Name : {{appoint.doctor_name}}
+              </div>
+              <div class="row ml-2">
+                  Doctor Fee : {{appoint.doctor_fee}}
+              </div>
+              <div class="row ml-2">
+                  Medicine Fee : {{appoint.medicine_fee}}
+              </div>
+              {% if appoint.is_admitted %}
+                  <div class="row ml-2">
+                      Bed Charges : {{appoint.bed_charge}} X {{appoint.no_days}}
+                  </div>
+              {% endif %}
+              <div class="row ml-2">
+                  Paid : {{appoint.paid}}
+              </div>
+              <div class="row ml-2">
+                  Pending : {{appoint.pending}}
+              </div>
+              <hr>
+              <div class="row ml-2">
+                  Total : {{appoint.total}}
+              </div>
+  
+  
+          </div>
+    
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Okay</button>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+  {%endfor%}
+
+      </div>
+
+{% endblock %}
+
+
+
+
+
+

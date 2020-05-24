@@ -1,0 +1,60 @@
+<title>Login</title>
+{% extends 'base.html'%}
+
+{% block content %}
+
+<main class="my-form mt-2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-primary text-center"><b>Login Here </b> </div>
+                        <div class="card-body">
+                            {% if invalid %}
+                                <div class="alert alert-danger">
+
+                                    <ul>
+                                        <li>{{invalid}}</li>
+                                    </ul>
+
+                                </div>
+                            {% endif %}
+                            <form name="my-form" action="../login/" method="post">
+                                {% csrf_token %}
+
+                                <div class="form-group row">
+                                    <label for="user_name" class="col-md-4 col-form-label text-md-right">Email Add</label>
+                                    <div class="col-md-6">
+                                        <input type="email" id="email" class="form-control" name="email" placeholder="example@yahoo.com" value="{{email_0}}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password </label>
+                                    <div class="col-md-6">
+                                        <input type="password" id="password" class="form-control" placeholder="*****" name="password" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row justify-content-center">
+                                    <div class="col-lg-8 ">
+                                        <input type="submit" class="form-control text-md-center btn btn-primary " value="Login" >
+                                    </div>
+                                </div>
+                            
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}
+
+
+
+
+
+

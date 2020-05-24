@@ -1,0 +1,193 @@
+<title>Home</title>
+{% extends 'hr_base.html'%}
+
+{% block content %}
+
+<main class="my-form mt-2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-center"><b>Profile Information </b> </div>
+                        <div class="card-body">
+                            <form name="my-form" action="../update_doctor_hr/{{get_user.user_id}}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                    <label for="full_name" class="col-md-4 col-form-label text-md-right">First Name <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="first_name" class="form-control" name="first_name" value="{{get_user.first_name}}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Last Name <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="last_name" class="form-control" name="last_name" value="{{get_user.last_name}}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="user_name" class="col-md-4 col-form-label text-md-right">Email <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="email" id="email" class="form-control" name="email" value="{{get_user.email}}" required readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="phone_number" class="col-md-4 col-form-label text-md-right">Phone Number <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="phone_number" minlength="10" maxlength="10" class="form-control" name="phone_number" value="{{get_user.phone_number}}"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="gender" class="col-md-4 col-form-label text-md-right">Gender <sup>*</sup> </label>
+                                    <div class="col-md-6">
+                                        <select name="gender" id="gender" class="form-control text-md-center" required>
+                                            <option value="" selected disabled>Select from dropdown</option>
+                                            <option value="male"
+                                                {%  if get_user.gender == 'male' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                Male
+                                            </option>
+                                            <option value="female"
+                                                {%  if get_user.gender == 'female' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                Female
+                                            </option>
+                                            <option value="others"
+                                                {%  if get_user.gender == 'others' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                Others
+                                            </option>
+                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="age" class="col-md-4 col-form-label text-md-right">Age <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="age" class="form-control" name="age" value="{{get_user.age}}"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="address" class="col-md-4 col-form-label text-md-right">Address <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="address" class="form-control" name="address" value="{{get_user.address}}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="blood_group" class="col-md-4 col-form-label text-md-right">Blood group <sup>*</sup> </label>
+                                    <div class="col-md-6">
+                                        <select name="blood_group" id="blood_group" class="form-control text-md-center"required >
+                                            <option value="" selected disabled>Select from dropdown</option>
+                                            <option value="A+"
+                                                {%  if get_user.blood_group == 'A+' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                A+
+                                            </option>
+                                            <option value="A-"
+                                                {%  if get_user.blood_group == 'A-' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                A-
+                                            </option>
+                                            <option value="B+"
+                                                {%  if get_user.blood_group == 'B+' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                B+
+                                            </option>
+                                            <option value="B-"
+                                                {%  if get_user.blood_group == 'B-' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                B-
+                                            </option>
+                                            <option value="AB+"
+                                                {%  if get_user.blood_group == 'AB+' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                AB+
+                                            </option>
+                                            <option value="AB-"
+                                                {%  if get_user.blood_group == 'AB-' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                AB-
+                                            </option>
+                                            <option value="O+"
+                                                {%  if get_user.blood_group == 'O+' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                O+
+                                            </option>
+                                            <option value="O-"
+                                                {%  if get_user.blood_group == 'O-' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                O-
+                                            </option>
+                                          
+                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="department" class="col-md-4 col-form-label text-md-right">Department <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="department" class="form-control" name="department" value="{{get_user.department}}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="salary" class="col-md-4 col-form-label text-md-right">Salary <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="salary" class="form-control" name="salary" value="{{get_user.salary}}" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="attendance" class="col-md-4 col-form-label text-md-right">Attendance <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="attendance" class="form-control" name="attendance" value="{{get_user.attendance}}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="status" class="col-md-4 col-form-label text-md-right">Status <sup>*</sup></label>
+                                    <div class="col-md-6">
+                                        <select name="status" id="status" class="form-control text-md-center" required>
+                                            <option value="" selected disabled>Select from dropdown</option>
+                                            <option value="Active"
+                                                {%  if get_user.status == 'Active' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                Active
+                                            </option>
+                                            <option value=Inactive
+                                                {%  if get_user.status == 'Inactive' %}
+                                                    selected="selected"
+                                                {% endif %}>
+                                                Inactive
+                                            </option>
+                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col justify-content-center">
+                                        <input type="submit" class="form-control text-md-center btn btn-primary " value="Update Doctor" >
+                                    </div>
+                                </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock%}

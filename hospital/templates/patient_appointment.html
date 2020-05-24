@@ -1,0 +1,57 @@
+<title>Appointment</title>
+{% extends 'patient_base.html'%}
+
+{% block content %}
+
+    
+        <div class="container-fluid mt-3">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-center text-primary">Appointments</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr> 
+                            <th  data-field="name" data-sortable="true"> Date</th>
+                            <th data-field="description" data-sortable="true"> Time </th>
+                            <th  data-field="action" data-sortable="true"> Consulting Doctor </th>
+                            <th  data-field="date" data-sortable="true"> Status </th>
+                      </tr>
+                      </thead>
+                      
+                      <tbody>
+                        {%for appoint in get_appointments%}
+                        <tr>
+                            <td>
+                                {{appoint.date}}
+                            </td>
+                            <td>
+                                  {{appoint.time}}
+                            </td>
+                            <td>
+                                {{appoint.doctor_name}}
+                            </td>
+                            <td>
+                                {{appoint.status}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                       
+ 
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+{% endblock %}
+
+
+
+
+
+

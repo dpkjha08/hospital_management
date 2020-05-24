@@ -1,0 +1,174 @@
+<title>Home</title>
+{% extends 'recep_base.html' %}
+
+{% block content %}
+    
+<script>
+       
+
+        function totalCalculate(){
+                
+                
+                var doctor_fee = parseFloat($('#doctor_fee').val());
+                var medicine_fee = parseFloat($('#medicine_fee').val());
+                var total_bed = parseFloat($('#total_bed').val());
+                var paid = parseFloat($('#paid').val());
+
+                
+                var total = doctor_fee+medicine_fee+total_bed
+
+                var pending = total-paid
+
+                document.getElementById('total').value=total;
+                document.getElementById('pending').value=pending;
+
+
+
+        }
+
+        function getValue(){
+                var is_admitted = $('#is_admitted').val();
+
+                if (is_admitted == "True"){
+                        $('.small1').css('display','block');
+                }
+                else{
+                        $('.small1').css('display','none');
+                }
+        }
+            
+        function totalBedCharge(){
+                var bed_charge = parseFloat($('#bed_charge').val());
+                var no_days = parseFloat($('#no_days').val());
+
+                var total_bed = bed_charge * no_days ;
+                document.getElementById('total_bed').value=total_bed;
+                totalCalculate();
+
+        }
+</script>
+<main class="my-form mt-2">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header text-center"><b>Appointment Information</b> </div>
+                            <div class="card-body">
+                                <form name="my-form" action="../update_appoint/{{get_appointment_info.id}}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group row">
+                                        <label for="full_name" class="col-md-4 col-form-label text-md-right">Patient Name <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="full_name" class="form-control" name="full_name" value="{{get_appointment_info.patient_name}}" required readonly>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row">
+                                        <label for="doctor_name" class="col-md-4 col-form-label text-md-right">Doctor Name <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                                <input type="text" id="doctor_name" class="form-control" name="doctor_name" value="{{get_appointment_info.doctor_name}}" required readonly>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row">
+                                        <label for="doctor_fee" class="col-md-4 col-form-label text-md-right">Doctor Fee <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                            <input type="text" onkeyup="totalCalculate()" id="doctor_fee" class="form-control" name="doctor_fee" value="0"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row">
+                                        <label for="medicine_fee" class="col-md-4 col-form-label text-md-right">Medicine Fee <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                            <input type="text" onkeyup="totalCalculate()" id="medicine_fee"  class="form-control" name="medicine_fee" value="0"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                        </div>
+                                    </div>
+    
+    
+                                    <div class="form-group row">
+                                        <label for="is_admitted" class="col-md-4 col-form-label text-md-right">Is Admitted <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                                <select name="is_admitted" onchange="getValue()" id="is_admitted" class="form-control text-md-center" required>
+                                                        <option value="" selected disabled>Select from dropdown</option>
+                                                        <option value="True">Yes</option>
+                                                        <option value="False">No</option>   
+                                                </select>
+                                        </div>
+                                     </div>
+                                     <div class="small1" style="display: none;">
+                                     <div class="form-group row">
+                                        <label for="bed_charge" class="col-md-4 col-form-label text-md-right">Bed charges <sup>*</sup></label>
+                                        
+                                        <div class="col-md-6">
+                                            <input type="text" onkeyup="totalBedCharge()" id="bed_charge" class="form-control" value="0" name="bed_charge" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label for="no_days" class="col-md-4 col-form-label text-md-right">No of Days <sup>*</sup></label>
+                                        
+                                        <div class="col-md-6">
+                                            <input type="text" onkeyup="totalBedCharge()" id="no_days" class="form-control" name="no_days" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label for="total_bed" class="col-md-4 col-form-label text-md-right">Total Bed Charges <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="total_bed" class="form-control" name="total_bed" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required >
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="paid" class="col-md-4 col-form-label text-md-right">Paid <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                            <input type="text" onkeyup="totalCalculate()" id="paid" class="form-control" name="paid" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required >
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="pending" class="col-md-4 col-form-label text-md-right">Pending <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                            <input type="text"  id="pending" class="form-control" name="pending" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="total" class="col-md-4 col-form-label text-md-right">Total <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="total" class="form-control" name="total" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="status" class="col-md-4 col-form-label text-md-right">Status <sup>*</sup></label>
+                                        <div class="col-md-6">
+                                                <select name="status" onchange="getValue()" id="status" class="form-control text-md-center" required>
+                                                        <option value="" selected disabled>Select from dropdown</option>
+                                                        <option value="Pending"
+                                                        {% if get_appointment_info.status == 'Pending' %}
+                                                        selected="selected"
+                                                        {% endif %}
+                                                        >Pending</option>
+                                                        <option value="Completed"
+                                                        {% if get_appointment_info.status == 'Completed' %}
+                                                        selected="selected"
+                                                        {% endif %}
+                                                        >Completed</option>   
+                                                </select>
+                                        </div>
+                                     </div>
+                                     
+                                     
+                                    
+                                    <div class="form-group row justify-content-center">
+                                        <div class="col-lg-10 ">
+                                            <input type="submit" class="form-control text-md-center btn btn-primary " value="Update" >
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+
+{% endblock %}

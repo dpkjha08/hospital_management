@@ -1,0 +1,170 @@
+<title>Dashboard</title>
+{% extends 'recep_base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 col-xl-4">
+                <div class="card bg-primary" >
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-white">Total Appointments</h5>
+                        <h1 class="text-center text-white"> <b> {{get_all_appointments_count}} </b></h1>
+                    </div>
+                    </div>  
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 col-xl-4">
+                <div class="card bg-light" >
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-dark">Completed Appointments</h5>
+                        <h1 class="text-center text-black"> <b> {{get_completed_appointment}} </b></h1>
+                    </div>
+                    </div>  
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 col-xl-4">
+                <div class="card bg-secondary" >
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-white">Pending Appointments</h5>
+                        <h1 class="text-center text-white"> <b>{{get_pending_appointment}}</b></h1>
+                    </div>
+                    </div>  
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card shadow mt-3 mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-center text-primary">Todays Appointment</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#myModal">Add Appointment</button>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr> 
+                                        <th  data-field="date"  data-sortable="true">Date</th>
+                                        <th  data-field="time" data-sortable="true"> Time</th>
+                                        <th data-field="doctor" data-sortable="true"> Doctor </th>
+                                        <th  data-field="patient"  data-sortable="true"> Patient </th>
+                                        <th  data-field="status" data-sortable="true">Status</th>
+                                        <th  data-field="action" data-sortable="true">Action</th>
+
+                                    </tr>
+                                </thead>
+                            
+                                <tbody>
+                                    {% for appointment in get_all_appointments %}
+                                        <tr>
+                                            <td>
+                                                {{appointment.date}}
+                                            </td>
+                                            <td>
+                                                {{appointment.time}}
+                                            </td>
+                                            <td>
+                                                {{appointment.doctor_name}}
+                                            </td>
+                                            <td>
+                                                {{appointment.patient_name}}
+                                            </td>
+                                            <td>
+                                                {{appointment.status}}
+                                            </td>
+                                            <td>
+                                                <a href="/update_appointment/{{appointment.id}}" class="btn btn-primary">Update</a>
+                                            </td>
+                                        </tr>
+
+                                    {% endfor %}
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+              
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Appointment</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="../add_appointment/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="date" class="col-md-3 col-form-label text-md-right">Date<sup>*</sup></label>
+                                <div class="col-md-8">
+                                    <input type="date" id="date" class="form-control" name="date" value="" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="time" class="col-md-3 col-form-label text-md-right">Time<sup>*</sup></label>
+                                <div class="col-md-8">
+                                    <!-- <textarea  rows="10" cols="4" id="prescription" name="prescription" value="" required><textarea> -->
+                                        <!-- <textarea id="prescription" rows="4" class="form-control" cols="30" required></textarea> -->
+                                    <input type="time" name="time"  id="time" value="" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="patient" class="col-md-3 col-form-label text-md-right">Patient<sup>*</sup> </label>
+                                <div class="col-md-8">
+                                    <select name="patient" id="patient" class="form-control text-md-center" required>
+                                        <option value="" selected disabled>Select from dropdown</option>
+                                        {% for patients in get_all_patients %}
+                                            <option value="{{patients.user_id}}">{{patients.first_name}} {{patients.last_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="doctor" class="col-md-3 col-form-label text-md-right">Doctor<sup>*</sup> </label>
+                                <div class="col-md-8">
+                                    <select name="doctor" id="doctor" class="form-control text-md-center" required>
+                                        <option value="" selected disabled>Select from dropdown</option>
+                                        {% for doctors in get_all_doctors %}
+                                            <option value="{{doctors.user_id}}">{{doctors.first_name}} {{doctors.last_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="status" class="col-md-3 col-form-label text-md-right">Status<sup>*</sup> </label>
+                                <div class="col-md-8">
+                                    <select name="status" id="status" class="form-control text-md-center" required>
+                                        <option value="" selected disabled>Select from dropdown</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        
+    
+    </div>
+
+
+
+{% endblock %}

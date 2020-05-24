@@ -1,0 +1,58 @@
+<title>Prescription</title>
+{% extends 'patient_base.html'%}
+
+{% block content %}
+
+    
+        <div class="container-fluid mt-3">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-center text-primary">Medical History</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr> 
+                          <th width=200px>Doctor Name</th>
+                            <th width="200px" data-field="name" data-sortable="true"> Symptoms</th>
+                            <th width="700px"data-field="description" data-sortable="true"> Prescription </th>
+                            <th  width="130px"data-field="action" data-sortable="true"> Date </th>
+                      </tr>
+                      </thead>
+                      
+                      <tbody>
+                        
+                          {% for each_precription in get_all_prescriptions%}
+
+                            <tr>
+                                <td>
+                                  {{each_precription.doctor_name}}
+                                </td>
+                                <td>
+                                  {{each_precription.symptoms}}
+                                </td>
+                                <td>
+                                  {{each_precription.prescription}}
+                                </td>
+                                <td>
+                                  {{each_precription.date}}
+                                </td>
+                            </tr>
+
+                          {% endfor %}
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+{% endblock %}
+
+
+
+
+
+

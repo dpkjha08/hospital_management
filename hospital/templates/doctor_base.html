@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </head>
+    <body style="padding-top: 80px;">
+        
+
+        <nav class="navbar fixed-top navbar-expand-md bg-primary navbar-static-top navbar-dark">
+            <!-- Brand --> 
+            <a class="navbar-brand text-white" href="#"> <h4> Leelavati Hospital  </h4></a>
+          
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon "></span>
+            </button>
+          
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="/doctor_home">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="/doctor_appointment">Appointment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="/doctor_prescription">Prescription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="/doctor_profile/{{get_user.user_id}}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="/logout">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          
+          {% block content %}
+          {% endblock %}
+
+    </body>
+    
+</html>
